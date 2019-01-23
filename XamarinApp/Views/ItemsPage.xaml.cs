@@ -39,7 +39,8 @@ namespace XamarinApp.Views
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            await Navigation.PushAsync(new ChatPage());
+            //await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
         }
 
         async void Handle_Clicked(object sender, System.EventArgs e)

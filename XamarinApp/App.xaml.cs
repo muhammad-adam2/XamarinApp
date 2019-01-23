@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinApp.Helpers;
+using XamarinApp.Models;
+using XamarinApp.Resources;
 using XamarinApp.Services;
 using XamarinApp.Views;
 
@@ -9,7 +14,6 @@ namespace XamarinApp
 {
     public partial class App : Application
     {
-        //TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
         public static string AzureBackendUrl = "http://localhost:5000";
         public static bool UseMockDataStore = true;
 
@@ -17,10 +21,14 @@ namespace XamarinApp
         {
             InitializeComponent();
 
-            if (UseMockDataStore)
-                DependencyService.Register<MockDataStore>();
-            else
-                DependencyService.Register<AzureDataStore>();
+            AppResources.Culture = new CultureInfo(Settings.culture);
+
+            if (!Current.Properties.ContainsKey("chats"))
+            {
+                Current.Properties["chats"] = new ObservableCollection<AllChatsModel>();
+            }
+
+            Settings.GroupId = 1;
 
             MainPage = new MainPage();
         }

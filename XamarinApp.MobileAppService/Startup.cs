@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-
+using XamarinApp.MobileAppService.Hubs;
 using XamarinApp.Models;
 
 namespace XamarinApp.MobileAppService
@@ -32,6 +32,8 @@ namespace XamarinApp.MobileAppService
             services.AddMvc();
             services.AddSingleton<IItemRepository, ItemRepository>();
 
+            services.AddSignalR();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
@@ -43,6 +45,11 @@ namespace XamarinApp.MobileAppService
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chathub");
+            });
 
             app.UseMvc();
 
