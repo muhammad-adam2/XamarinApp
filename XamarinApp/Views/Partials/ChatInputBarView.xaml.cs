@@ -21,7 +21,7 @@ namespace XamarinApp.Views.Partials
         public void Handle_Completed(object sender, EventArgs e)
         {
             (this.Parent.Parent.BindingContext as ChatViewModel).OnSendCommand.Execute(null);
-            chatTextInput.Focus();
+            chatTextInput.Unfocus();
         }
 
         public void UnFocusEntry()

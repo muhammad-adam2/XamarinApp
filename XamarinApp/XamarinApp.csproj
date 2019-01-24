@@ -37,7 +37,6 @@
       <LastGenOutput>AppResources.ZL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.tn.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResources.TS.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.zu.resx">

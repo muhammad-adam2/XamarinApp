@@ -30,7 +30,7 @@
             <Label.GestureRecognizers> 
                 <TapGestureRecognizer
                       Command="{Binding OnSendCommand}"
-                      Tapped="Handle_Completed"/>
+                      Tapped="Handle_Completed" NumberOfTapsRequired="1"/>
            </Label.GestureRecognizers>
        </Label>
     </Grid>
