@@ -23,7 +23,7 @@ namespace XamarinApp.Helpers
                 return null;
 
 
-            return (messageVm.User == "user 1") ? outgoingDataTemplate : incomingDataTemplate;
+            return (messageVm.User == Settings.User) ? outgoingDataTemplate : incomingDataTemplate;
         }
     }
 }

@@ -6,6 +6,11 @@ namespace XamarinApp.MobileAppService.Hubs
 {
     public class ChatHub : Hub
     {
+        public async Task AddToGroup(string groupName, string user)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
         public async Task SendMessageGroup(string groupName, string user, string message)
         {
             await Clients.Group(groupName).SendAsync("ReceiveMessage", user, message);

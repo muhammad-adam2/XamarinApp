@@ -41,27 +41,27 @@ namespace XamarinApp.ViewModels
                 .WithUrl($"http://{ip}:5000/chathub")
                 .Build();
 
-            AllChats = Application.Current.Properties["chats"] as ObservableCollection<AllChatsModel>;
+            //AllChats = Application.Current.Properties["chats"] as ObservableCollection<AllChatsModel>;
 
-            if (AllChats.Any(x => x.ChatId == Settings.GroupId))
-            {
-                AllChatsModel model = AllChats.Single(x => x.ChatId == Settings.GroupId);
-                Messages = model.Messages;
-            }
-            else
-            {
-                AllChats.Add(new AllChatsModel
-                {
-                    ChatId = Settings.GroupId,
-                    Messages = new ObservableCollection<MessageModel>()
-                });
-            }
+            //if (AllChats.Any(x => x.ChatId == Settings.GroupId))
+            //{
+            //    AllChatsModel model = AllChats.Single(x => x.ChatId == Settings.GroupId);
+            //    Messages = model.Messages;
+            //}
+            //else
+            //{
+            //    AllChats.Add(new AllChatsModel
+            //    {
+            //        ChatId = Settings.GroupId,
+            //        Messages = new ObservableCollection<MessageModel>()
+            //    });
+            //}
             
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
             { 
                 var finalMessage = message;
-                if (user != "user 1")
+                if (user != Settings.User)
                 {
                     Messages.Add(new MessageModel { Message = message, User = user });
                 }
@@ -75,11 +75,11 @@ namespace XamarinApp.ViewModels
             {
             if (!string.IsNullOrEmpty(TextToSend))
             {
-                Messages.Add(new MessageModel() { Message = TextToSend, User = "user 1" });
-                AllChatsModel model = AllChats.Single(x => x.ChatId == Settings.GroupId);
-                model.Messages = Messages;
+                Messages.Add(new MessageModel() { Message = TextToSend, User = Settings.User });
+                //AllChatsModel model = AllChats.Single(x => x.ChatId == Settings.GroupId);
+                //model.Messages = Messages;
                 Connect();
-                SendMessage("user 1", TextToSend);
+                SendMessage(Settings.User, TextToSend);
                 TextToSend = string.Empty;
             }
 
@@ -93,6 +93,7 @@ namespace XamarinApp.ViewModels
             try
             {
                 hubConnection.StartAsync();
+                hubConnection.InvokeAsync("AddToGroup", Settings.GroupName, Settings.User);
                 isConnected = true;
             }
             catch (Exception ex)
@@ -106,7 +107,7 @@ namespace XamarinApp.ViewModels
         {
             try
             {
-                hubConnection.InvokeAsync("SendMessageGroup", Settings.GroupId , user, message);
+                hubConnection.InvokeAsync("SendMessageGroup", Settings.GroupName, user, message);
             }
             catch (Exception ex)
             {

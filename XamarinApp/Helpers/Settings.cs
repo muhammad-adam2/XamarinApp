@@ -39,5 +39,29 @@ namespace XamarinApp.Helpers
                 AppSettings.AddOrUpdateValue("group", value);
             }
         }
+
+        public static string User
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("User", "user 1");
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("User", value);
+            }
+        }
+
+        public static string GroupName
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("GroupName", "1");
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue("GroupName", value);
+            }
+        }
     }
 }
